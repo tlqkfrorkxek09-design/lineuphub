@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LINEUP HUB</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LINEUP HUB</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel for JSX compilation in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans selection:bg-purple-600 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function LineupHub() {
+      const [authLevel, setAuthLevel] = React.useState(0);
+      const [pinInput, setPinInput] = React.useState('');
+      const [activeTab, setActiveTab] = React.useState('dashboard');
+      
+      const [notices, setNotices] = React.useState([
+        { id: 1, title: '라인업 허브 v1.0 정식 런칭', date: '2026-11-09', author: '총괄관리자', category: '공지', content: '팬 아키이빙 및 4단계 권한 체계, 11모듈 제어 시스템이 활성화되었습니다.' }
+      ]);
+
+      const [gallery, setGallery] = React.useState([
+        { id: 1, title: '공식 런칭 기념 축하 배너 아트', author: '서포터즈A', likes: 128, tag: 'FanArt' }
+      ]);
+
+      const [messages, setMessages] = React.useState([
+        { id: 1, sender: '익명팬A', text: '오늘 방송 스케줄 변동 있나요?', time: '14:20' }
+      ]);
+      const [newMsg, setNewMsg] = React.useState('');
+
+      const modules = [
+        { id: 1, name: '권한 제어 모듈', status: 'Active', desc: 'PIN 번호 기반 4단계 접근 제어' },
+        { id: 2, name: '공지 승인 모듈', status: 'Active', desc: '아카이브 공지 사전 검토' },
+        { id: 3, name: '트래픽 모니터링', status: 'Active', desc: '서버 접속량 추적' },
+        { id: 4, name: '익명 피드백 필터', status: 'Active', desc: '비속어 및 키워드 필터링' },
+        { id: 5, name: '콘텐츠 백업', status: 'Active', desc: '데이터 유실 방지 자동 스냅샷' },
+        { id: 6, name: '스케줄 동기화', status: 'Active', desc: '일정 및 알림 타임라인 연동' },
+        { id: 7, name: '보안 로그', status: 'Active', desc: '관리자 접속 및 변경 이력 기록' },
+        { id: 8, name: '링크 관리', status: 'Active', desc: '외부 아카이브 및 팬카페 링크 모음' },
+        { id: 9, name: '알림 시스템', status: 'Active', desc: '상단 배너 및 푸시 알림 연동' },
+        { id: 10, name: '커스텀 세팅', status: 'Active', desc: '테마 및 대시보드 레이아웃 설정' },
+        { id: 11, name: '시스템 통계', status: 'Active', desc: '방문자 활성도 종합 데이터 분석' }
+      ];
+
+      const handlePinLogin = (e) => {
+        e.preventDefault();
+        if (pinInput === '7777') {
+          setAuthLevel(4);
+          alert('👑 총괄관리자 권한으로 로그인되었습니다.');
+        } else if (pinInput === '1234') {
+          setAuthLevel(3);
+          alert('🛡️ 매니저 권한으로 로그인되었습니다.');
+        } else if (pinInput === '1111') {
+          setAuthLevel(2);
+          alert('⭐ 인증회원 권한으로 로그인되었습니다.');
+        } else {
+          alert('잘못된 PIN 번호입니다. (테스트: 1111, 1234, 7777
